@@ -28,4 +28,21 @@ for product in products:
     print(f"{product['SKU']}\t{product['Product Name']}\t{product['Product QT']}\t{product['Single Book Price']}")
     print(f"Total Price : {product['Product QT'] * product['Single Book Price']}")
     print("------------------------------------------------------")
+    
+print("-----------------searching for a product-----------------")
+search = input("Enter the product item from SKU: ")
+for product in products:
+    if product['SKU'] == search:
+        print(f"SKU : {product['SKU']}")
+        print(f"Product Name : {product['Product Name']}")
+        print(f"Product QT : {product['Product QT']}")
+        print(f"Single Book Price : {product['Single Book Price']}")
+        print(f"Total Price : {product['Product QT'] * product['Single Book Price']}")
+        break
+
+
+for product in products:
+    print(f"{product['SKU']}\t{product['Product Name']}\t{product['Product QT']}\t{product['Single Book Price']}")
+    print(f"Total Price : {product['Product QT'] * product['Single Book Price']}")
+    print("------------------------------------------------------")
 
