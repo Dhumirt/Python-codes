@@ -4,39 +4,36 @@
 products = []
 
 while True:
-    sku = input("Enter SKU ( Unique Number ) : ")
-    product_name = input("Enter Product Name : ")
-    product_qt = int(input("Enter Product QT : "))
-    single_price = float(input("Enter Single Book Price : ").replace('/-', ''))
-
-    product = {
-        "SKU": sku,
-        "Product Name": product_name,
-        "Product QT": product_qt,
-        "Single Book Price": single_price
-    }
-    products.append(product)
-
-    more = input("Do you Want Add more [Y/N] ").strip().upper()
-    if more == 'N':
-        break
-
-print(products)
-
-print("SKU\tProduct Name\tProduct QT\tSingle Book Price")
-for product in products:
-    print(f"{product['SKU']}\t{product['Product Name']}\t{product['Product QT']}\t{product['Single Book Price']}")
-    print(f"Total Price : {product['Product QT'] * product['Single Book Price']}")
-    print("------------------------------------------------------")
+    name = input("Enter Product Name: ")
+    price = float(input("Enter " + name + " Price: ").replace('/-', ''))
+    quantity = int(input("Enter " + name + " Quantity: "))
+    products.append([name, price, quantity])
     
-print("-----------------searching for a product-----------------")
-search = input("Enter the product item from SKU: ")
-for product in products:
-    if product['SKU'] == search:
-        print(f"SKU : {product['SKU']}")
-        print(f"Product Name : {product['Product Name']}")
-        print(f"Product QT : {product['Product QT']}")
-        print(f"Single Book Price : {product['Single Book Price']}")
-        print(f"Total Price : {product['Product QT'] * product['Single Book Price']}")
+    more = input("Do you want to add more [Y/N]: ")
+    if more != 'Y':
         break
+
+total = sum(price * quantity for _, price, quantity in products)
+gst_rate = 0
+
+gst_input = input("Do You Want to add GST [Y/N]: ")
+if gst_input == 'Y':
+    gst_rate = float(input("Enter GST %: "))
+total_with_gst = total + (total * gst_rate / 100)
+
+offer_choice = int(input("Select Offer (1. 2% OFF, 2. 4% OFF, 3. 8% OFF): "))
+offer_rates = {1: 2, 2: 4, 3: 8}
+offer_rate = offer_rates.get(offer_choice, 0)
+final_total = total_with_gst - (total_with_gst * offer_rate / 100)
+
+
+print("\n------- BILL -------")
+for name, price, quantity in products:
+    print(name, "=", price * quantity, "/-")
+print("-------------------")
+print("Total", "=", total, "/-")
+print("GST", "=", gst_rate, "%")
+print("Offer", "=", offer_rate, "%")
+print("-------------------")
+print("Final Total:", "=", round(final_total, 2), "/-")
 
